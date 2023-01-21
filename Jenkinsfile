@@ -37,10 +37,11 @@ pipeline {
                 }
             }
         }
+    }
     post {
         always{
             cleanWs()
-            emailext body: '$DEFAULT_CONTENT', subject: '$DEFAULT_SUBJECT', to: '$DEFAULT_RECIPIENTS'
+            // emailext body: '$DEFAULT_CONTENT', subject: '$DEFAULT_SUBJECT', to: '$DEFAULT_RECIPIENTS'
         }
     }
         // stage('Invalidate CloudFront cache') {
@@ -65,5 +66,4 @@ pipeline {
     //         bitbucketStatusNotify(buildState: 'FAILED')
     //     }
     // }
-}
 }
