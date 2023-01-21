@@ -25,7 +25,8 @@ pipeline {
                 dir(WorkDir) {
                     echo 'Building...'
                     // sh "docker build -t ${IMAGE_REPO_NAME}:${IMAGE_TAG} ."
-                    sh "./mvnw spring-boot:run"
+                    sh "./mvnw package"
+                    // sh "java -jar target/*.jar"
                 }
             } 
         }
