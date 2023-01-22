@@ -32,7 +32,7 @@ pipeline {
         }
         stage('Upload the artifact to AWS S3 bucket') {
             steps {
-                withAWS(region:'$AWS_REGION',credentials:'$AWS_Creds_name') {
+                withAWS(region:'ap-southeast-2',credentials:'sunjenny_AWS') {
                     echo "Uploading artifact to AWS S3 bucket..."
                     s3Upload(pathStyleAccessEnabled: true, payloadSigningEnabled: true, file:"$ArtifactDir", bucket:"$S3Bucket_UAT_Bucket")
                 }
