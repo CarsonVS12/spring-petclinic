@@ -21,6 +21,8 @@ pipeline {
             steps{
                 dir(WorkDir) {
                     echo 'Building image with docker...'
+                    sh 'pwd'
+                    sh 'docker --version'
                     sh "docker build -t ${ImgName}:${ImgTag} . --platform linux/amd64"
                 }
             } 
