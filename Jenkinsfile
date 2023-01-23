@@ -8,11 +8,13 @@ pipeline {
     environment {
         AWS_REGION = "ap-southeast-2"
         AWS_Creds_name = "sunjenny_AWS"
-        IMAGE_REPO_NAME = "spring-petclinic"
-        IMAGE_TAG = "latest"
+        ImgName = "spring-petclinic"
+        ImgTag = "latest"
         S3Bucket_UAT_Bucket = "spring-petclinic-sunjenny"
         WorkDir = "./"
         ArtifactDir = "./target"
+        ECRRegistry_URL = "368399608041.dkr.ecr.ap-southeast-2.amazonaws.com"
+        HTTP_Port = "8080"
         // Distribution_ID = "E1MV3CMCEU2IWH"
         // ENV_key = ".env"
         // S3Bucket_State_Bucket = "linkdevapp-state-bucket"
@@ -20,22 +22,45 @@ pipeline {
     }
 
     stages {
-        stage('Build') {
+        stage('Build image') {
             steps{
                 dir(WorkDir) {
-                    echo 'Building...'
-                    // sh "docker build -t ${IMAGE_REPO_NAME}:${IMAGE_TAG} ."
-                    sh "./mvnw package"
-                    // sh "java -jar target/*.jar"
+                    echo 'Building image with docker...'
+                    sh "docker build -t ${IMAGE_REPO_NAME}:${IMAGE_TAG} ."
                 }
             } 
         }
-        stage('Upload the artifact to AWS S3 bucket') {
+
+        stage('Log in to AWS ECR') {
             steps {
-                withAWS(region:'ap-southeast-2',credentials:'sunjenny_AWS') {
-                    echo "Uploading artifact to AWS S3 bucket..."
-                    s3Upload(pathStyleAccessEnabled: true, payloadSigningEnabled: true, file:"$ArtifactDir", bucket:"$S3Bucket_UAT_Bucket")
+                dir(WorkDir) {
+                    withAWS(credentials: "${AWS_Creds_name}", region: "${AWS_REGION}") {
+                    echo 'Logging in to AWS ECR...'
+                    sh "aws ecr get-login-password --region ${AWS_REGION} | docker login --username AWS --password-stdin ${ECRRegistry_URL}"
+                    }
                 }
+            }
+        }
+
+        stage('Pushing image to ECR') {
+            steps{  
+                dir(WorkDir) {
+                    echo 'Pushing image to ECR'
+                    sh 'docker tag ${ImgName}:${ImgTag} ${ECRRegistry_URL}/${ImgName}:${ImgTag}'
+                    sh 'docker push ${ECRRegistry_URL}/${ImgName}:${ImgTag}'
+                }
+            }
+        }
+
+        stage('Deploy image to AWS EC2') {
+            steps{
+                dir(WorkDir) {
+                    withAWS(credentials: "${AWS_Creds_name}", region: "${AWS_DEFAULT_REGION}") {
+                        echo 'Deploying image to AWS EC2...'
+                        sh 'docker pull ${ECRRegistry_URL}/${ImgName}:${ImgTag}'
+                        sh 'docker run -d --rm -p ${HTTP_Port}:8080 --name ${ImgName} ${ImgName}:${ImgTag}'
+                    }
+                }  
             }
         }
     }
@@ -45,14 +70,7 @@ pipeline {
             // emailext body: '$DEFAULT_CONTENT', subject: '$DEFAULT_SUBJECT', to: '$DEFAULT_RECIPIENTS'
         }
     }
-        // stage('Invalidate CloudFront cache') {
-        //     steps {
-        //         withAWS(region:'ap-southeast-2',credentials:'LinkDev_AWS') {
-        //             echo "Invalidating CloudFront cache..."
-        //             cfInvalidate(distribution:"$Distribution_ID", paths:['/*'], waitForCompletion: true)
-        //         }
-        //     }
-        // }
+
     
     // post {
     //     always {
