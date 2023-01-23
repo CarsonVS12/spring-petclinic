@@ -15,10 +15,6 @@ pipeline {
         ArtifactDir = "./target"
         ECRRegistry_URL = "368399608041.dkr.ecr.ap-southeast-2.amazonaws.com"
         HTTP_Port = "8080"
-        // Distribution_ID = "E1MV3CMCEU2IWH"
-        // ENV_key = ".env"
-        // S3Bucket_State_Bucket = "linkdevapp-state-bucket"
-        // S3Bucket_Envfile_Path = "env-files/uat/frontend/.env"
     }
 
     stages {
@@ -26,7 +22,7 @@ pipeline {
             steps{
                 dir(WorkDir) {
                     echo 'Building image with docker...'
-                    sh "docker build -t ${IMAGE_REPO_NAME}:${IMAGE_TAG} ."
+                    sh "docker build -t ${IMAGE_REPO_NAME}:${IMAGE_TAG} . --platform linux/amd64"
                 }
             } 
         }
