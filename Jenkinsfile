@@ -10,7 +10,6 @@ pipeline {
         AWS_Creds_name = "sunjenny_AWS"
         ImgName = "spring-petclinic"
         ImgTag = "latest"
-        S3Bucket_UAT_Bucket = "spring-petclinic-sunjenny"
         WorkDir = "./"
         ArtifactDir = "./target"
         ECRRegistry_URL = "368399608041.dkr.ecr.ap-southeast-2.amazonaws.com"
@@ -22,7 +21,7 @@ pipeline {
             steps{
                 dir(WorkDir) {
                     echo 'Building image with docker...'
-                    sh "docker build -t ${IMAGE_REPO_NAME}:${IMAGE_TAG} . --platform linux/amd64"
+                    sh "docker build -t ${ImgName}:${ImgTag} . --platform linux/amd64"
                 }
             } 
         }
