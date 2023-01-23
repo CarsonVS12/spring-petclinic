@@ -52,7 +52,7 @@ pipeline {
         stage('Deploy image to AWS EC2') {
             steps{
                 dir(WorkDir) {
-                    withAWS(credentials: "${AWS_Creds_name}", region: "${AWS_DEFAULT_REGION}") {
+                    withAWS(credentials: "${AWS_Creds_name}", region: "${AWS_REGION}") {
                         echo 'Deploying image to AWS EC2...'
                         sh 'docker pull ${ECRRegistry_URL}/${ImgName}:${ImgTag}'
                         sh 'docker run -d --rm -p ${HTTP_Port}:8080 --name ${ImgName} ${ImgName}:${ImgTag}'
