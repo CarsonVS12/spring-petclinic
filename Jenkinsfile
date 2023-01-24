@@ -68,3 +68,4 @@ pipeline {
             emailext body: '$DEFAULT_CONTENT', subject: '$DEFAULT_SUBJECT', to: '$DEFAULT_RECIPIENTS'
         }
     }
+}
