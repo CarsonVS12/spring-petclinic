@@ -22,19 +22,22 @@ terraform plan
 terraform apply --auto-approve=true
 ```
 
-You will be able to see the ip address of the ec2 server and use key.pem to login the server
+ You will be able to see the ip address of the ec2 server and use key.pem to login the server
 
 ```
 chmod 400 key.pem
 ssh -i key.pem ec2@<ip address>
 ```
 
-2) install Jenkins on ec2 instance
+2) Install Jenkins on ec2 instance
 <a href="https://www.jenkins.io/doc/tutorials/tutorial-for-installing-jenkins-on-AWS/#jenkins-on-aws">Jenkins on AWS</a>
-Once the Jenkins is installed and configured, go to **Manage jenkins**, **Manage Plugins**, install plugins including **AWS, aws pipeline, docker, CloudBees AWS, ec2, ansicolor, email extensions** etc
-Then go to **Manage jenkins**, **Manage Credentials** to manage AWS credentials
 
-3) install Docker 
+ Once the Jenkins is installed and configured, go to **Manage jenkins**, **Manage Plugins**, install plugins including **AWS, aws pipeline, docker, CloudBees AWS, ec2, ansicolor, email extensions** etc
+
+ Then go to **Manage jenkins**, **Manage Credentials** to manage AWS credentials
+
+
+3) Install Docker 
 <a href="https://docs.docker.com/desktop/install/linux-install/">Install on Linux</a>
 
 ```
@@ -42,7 +45,7 @@ sudo docker login
 sudo systemctl start docker
 ```
 
-Don't forget to add group membership for the default ec2-user so you can run all docker commands without using the sudo command, and add “jenkins” user to the “docker” group
+ Don't forget to add group membership for the default ec2-user so you can run all docker commands without using the sudo command, and add “jenkins” user to the “docker” group
 
 ```
 sudo usermod -aG docker ec2-user
@@ -50,12 +53,15 @@ sudo usermod -aG docker jenkins
 ```
 
 4) Run CICD pipeline on Jenkins server
-Once the is successfully build, you will see the following picture
+   
+Once the is successfully build, you will see the following picture.
 
 ![Alt text](./images/jenkins_pipeline.png?raw=true "jenkins_pipeline")
+
 If the build step is failed, try to read the **Console Output** and solve the issue.
 
-5) The first time for ec2 server to run the docker image will take around 10 min to finish. After that, click the awesome customer url: https://petclinic.sunjenny.net to perform the following set of functions:
+
+1) It might take over 10 min for ec2 server to run the docker image for the first time. After that, you can click the awesome customer url: https://petclinic.sunjenny.net.
 
 ![Alt text](./images/petclinic-web.png?raw=true "petclinic-web")
 
