@@ -11,7 +11,6 @@ pipeline {
         ImgName = "spring-petclinic"
         ImgTag = "latest"
         WorkDir = "./"
-        ArtifactDir = "./target"
         ECRRegistry_URL = "368399608041.dkr.ecr.ap-southeast-2.amazonaws.com"
         HTTP_Port = "80"
     }
@@ -61,7 +60,7 @@ pipeline {
             }
         }
     }
-    
+
     post {
         always{
             cleanWs()
