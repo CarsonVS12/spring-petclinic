@@ -15,3 +15,53 @@ build/*
 _site/
 *.css
 !petclinic.css
+
+### Terraform ###
+# Local .terraform directories
+**/.terraform/*
+
+# .tfstate files
+*.tfstate
+*.tfstate.*
+*.tfvars
+.terraform.lock.hcl
+**/.ssh/*
+*.pem
+*.pub
+.env
+# Logs
+logs
+*.log
+
+# OS
+.DS_Store
+
+# Tests
+/coverage
+/.nyc_output
+
+# IDEs and editors
+/.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# Custom
+.private
+.terraform
+*.tfstate
+*.tfstate.*
+*.lock.hcl
+*.tfvars
+.ssh
+*.pem
