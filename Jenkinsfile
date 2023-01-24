@@ -61,25 +61,11 @@ pipeline {
             }
         }
     }
+    
     post {
         always{
             cleanWs()
-            // emailext body: '$DEFAULT_CONTENT', subject: '$DEFAULT_SUBJECT', to: '$DEFAULT_RECIPIENTS'
+            echo "Sending email notifications..."
+            emailext body: '$DEFAULT_CONTENT', subject: '$DEFAULT_SUBJECT', to: '$DEFAULT_RECIPIENTS'
         }
     }
-
-    
-    // post {
-    //     always {
-    //         echo "Sending Emails......"
-    //         emailext body: '$DEFAULT_CONTENT', subject: '$DEFAULT_SUBJECT', to: '$DEFAULT_RECIPIENTS'
-    //         cleanWs()
-    //     }
-    //     success {
-    //         bitbucketStatusNotify(buildState: 'SUCCESSFUL')
-    //     }
-    //     failure {
-    //         bitbucketStatusNotify(buildState: 'FAILED')
-    //     }
-    // }
-}
