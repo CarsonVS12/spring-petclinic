@@ -15,7 +15,7 @@
 ## Brief steps for the deployment
 1) Using Terraform to create the infrastructure (The terraform scripts are included in ***terraform_infra*** folder)
 
-    With everything is set up, we need to change all the variables to your own before run the commands to deploy our infrastructure. The variables are listed below:
+   With everything is set up, we need to change all the variables to your own before run the commands to deploy our infrastructure. The variables are listed below:
 
 ```
 aws_region      = "your region"
@@ -33,7 +33,7 @@ terraform plan
 terraform apply --auto-approve=true
 ```
 
-    You will be able to see the ip address of the ec2 server after the terraform apply and then use key.pem to login to the server
+   You will be able to see the ip address of the ec2 server after the terraform apply and then use key.pem to login to the server
 
 ```
 chmod 400 key.pem
@@ -43,9 +43,9 @@ ssh -i key.pem ec2@<ip address>
 2) Install Jenkins on ec2 instance
 <a href="https://www.jenkins.io/doc/tutorials/tutorial-for-installing-jenkins-on-AWS/#jenkins-on-aws">Jenkins on AWS</a>
 
-    Once the Jenkins is installed and configured, go to **Manage jenkins**, **Manage Plugins**, install plugins including **AWS, aws pipeline, docker, CloudBees AWS, ec2, ansicolor, email extensions** etc
+   Once the Jenkins is installed and configured, go to **Manage jenkins**, **Manage Plugins**, install plugins including **AWS, aws pipeline, docker, CloudBees AWS, ec2, ansicolor, email extensions** etc
 
-    Then go to **Manage jenkins**, **Manage Credentials** to manage AWS credentials
+   Then go to **Manage jenkins**, **Manage Credentials** to manage AWS credentials
 
 
 3) Install Docker 
@@ -56,7 +56,7 @@ sudo docker login
 sudo systemctl start docker
 ```
 
-    Don't forget to add group membership for the default ec2-user so you can run all docker commands without using the sudo command, and add “jenkins” user to the “docker” group
+   Don't forget to add group membership for the default ec2-user so you can run all docker commands without using the sudo command, and add “jenkins” user to the “docker” group
 
 ```
 sudo usermod -aG docker ec2-user
@@ -75,17 +75,17 @@ git config --global user.email "Your user.email"
 
 5) Run CICD pipeline on Jenkins server
    
-    Once the pipeline is successfully built, you will see the following picture.
+   Once the pipeline is successfully built, you will see the following picture.
 
 ![Alt text](./images/jenkins_pipeline.png?raw=true "jenkins_pipeline")
 
-    If the build step is failed, try to read the **Console Output** and solve the issue. ***DON'T GIVE UP!***
+   If the build step is failed, try to read the **Console Output** and solve the issue. ***DON'T GIVE UP!***
 
-    It might take over 10 min for ec2 server to run the docker image for the first time. After that, you can click the awesome customer url: https://petclinic.sunjenny.net.
+   It might take over 10 min for ec2 server to run the docker image for the first time. After that, you can click the awesome customer url: https://petclinic.sunjenny.net.
 
 ![Alt text](./images/petclinic-web.png?raw=true "petclinic-web")
 
-    The applications allows you to perform the following set of functions:
+   The applications allows you to perform the following set of functions:
 
 - Add Pets
 - Add Owners
