@@ -13,7 +13,7 @@
 * Connect MySQL database to the web serve to achieve several functions
 
 ## Brief steps for the deployment
-1) Using Terraform to create the infrastructure (The terraform scripts are included in ***terraform_infra*** folder)
+1) ###Using Terraform to create the infrastructure (The terraform scripts are included in ***terraform_infra*** folder)###
 
    With everything is set up, we need to change all the variables to your own before run the commands to deploy our infrastructure. The variables are listed below:
 
@@ -40,7 +40,7 @@ chmod 400 key.pem
 ssh -i key.pem ec2@<ip address>
 ```
 
-2) Install Jenkins on ec2 instance
+2) ###Install Jenkins on ec2 instance###
 <a href="https://www.jenkins.io/doc/tutorials/tutorial-for-installing-jenkins-on-AWS/#jenkins-on-aws">Jenkins on AWS</a>
 
    Once the Jenkins is installed and configured, go to **Manage jenkins**, **Manage Plugins**, install plugins including **AWS, aws pipeline, docker, CloudBees AWS, ec2, ansicolor, email extensions** etc
@@ -48,7 +48,7 @@ ssh -i key.pem ec2@<ip address>
    Then go to **Manage jenkins**, **Manage Credentials** to manage AWS credentials
 
 
-3) Install Docker 
+3) ###Install Docker###
 <a href="https://docs.docker.com/desktop/install/linux-install/">Install on Linux</a>
 
 ```
@@ -63,7 +63,7 @@ sudo usermod -aG docker ec2-user
 sudo usermod -aG docker jenkins
 ```
 
-4) Install Git
+4) ###Install Git###
 <a href="https://www.atlassian.com/git/tutorials/install-git">Install Git</a>
 
 ```
@@ -73,7 +73,7 @@ git config --global user.name "Your name"
 git config --global user.email "Your user.email"
 ```
 
-5) Run CICD pipeline on Jenkins server
+5) ###Run CICD pipeline on Jenkins server###
    
    Once the pipeline is successfully built, you will see the following picture.
 
