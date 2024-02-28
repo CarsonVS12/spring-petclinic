@@ -1,10 +1,6 @@
 pipeline {
     agent any
     
-    options {
-        ansiColor('xterm')
-    }
-    
     environment {
         AWS_REGION = "ap-southeast-2"
         AWS_Creds_name = "sunjenny_AWS"
